@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Config (contains sensitive token)
+config.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated projects
+demo-*/
+my-*/
+test-*/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
