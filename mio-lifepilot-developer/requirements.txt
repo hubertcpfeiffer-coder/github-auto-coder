@@ -6,6 +6,12 @@ requests==2.31.0
 # Konfiguration
 pyyaml==6.0.1
 
+# GitHub Integration
+PyGithub==2.1.1
+
+# Data Validation (für daily_optimizer.py)
+pydantic==2.5.0
+
 # Streamlit Dashboard (optional)
 streamlit==1.29.0
 

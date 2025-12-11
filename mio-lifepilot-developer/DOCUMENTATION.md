@@ -10,6 +10,7 @@ Der Mio-Lifepilot Developer ist ein lokaler KI-Entwickler mit einem einfachen GU
 mio-lifepilot-developer/
 ├── README.md                     # Hauptdokumentation mit Anleitung und Vision
 ├── mio_developer.py              # Dein lokales Programm mit dem großen Button
+├── daily_optimizer.py            # Täglicher Optimierer für Code-Verbesserungen
 ├── config.yaml.example           # Beispiel für deine API-Keys
 ├── requirements.txt              # Alle benötigten Pakete
 ├── dashboard/                    # Optional: Streamlit-Dashboard
@@ -69,6 +70,27 @@ Das Dashboard bietet:
 - **Erweiterte Optionen**: Framework-Auswahl, Test-Generierung, etc.
 - **Runder Tisch Visualisierung**: Sehe die Diskussion der KI-Modelle
 
+### Option 3: Täglicher Optimierer (daily_optimizer.py)
+
+```bash
+python daily_optimizer.py
+```
+
+Der tägliche Optimierer:
+- **Analysiert** bestehenden Code aus deinen Repositories
+- **Optimiert** Performance und Struktur durch den Runden Tisch
+- **Generiert** verbesserte Versionen mit Erklärungen
+- **Integriert** später echte KI-APIs für automatische Optimierung
+- **Pusht** Verbesserungen automatisch zu GitHub (in Entwicklung)
+
+Beispiel-Verwendung:
+```python
+# Der Optimierer analysiert z.B. Betalifepilot-Code und schlägt vor:
+# - Modularer strukturieren
+# - List-Comprehensions statt Schleifen
+# - Neue Features: Biorhythmus, Provisionsverhandlung, q.ANT
+```
+
 ### Beispiel-Anfragen
 
 1. "Erstelle ein Modul für Provisionsverhandlungen"
@@ -80,10 +102,12 @@ Das Dashboard bietet:
 
 - ✅ Einfaches Desktop GUI mit großem Button
 - ✅ Streamlit-Dashboard für Web-Zugriff
+- ✅ Täglicher Optimierer (daily_optimizer.py)
 - ✅ Eingabe von Programmierwünschen
 - ✅ Simulation des "Runden Tisches" (Demo)
 - ✅ Code-Generierung mit Erklärung
 - ✅ Schöne Ausgabe mit Formatierung
+- ✅ Biorhythmus-Berechnung und Provisionsverhandlung (Beispiele)
 
 ## Geplante Erweiterungen
 

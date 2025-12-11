@@ -17,11 +17,18 @@ pip install -r requirements.txt
 streamlit run dashboard/app.py
 ```
 
+**Täglicher Optimierer:**
+```bash
+pip install -r requirements.txt
+python daily_optimizer.py
+```
+
 ## Funktionen
 
 - Einfaches GUI mit großem Button
 - Eingabe deines Programmierwunsches (z. B. "Modul für Provisionsverhandlungen")
 - Der Runde Tisch analysiert bestehende Lösungen und generiert neue, bessere Umsetzung
 - Ergebnis mit vollständigem Python-Code und Erklärung
+- Täglicher Optimierer für automatische Code-Verbesserungen
 - Optional: Streamlit-Dashboard für Web-basierte Nutzung
 - Später erweiterbar: echte API-Calls, GitHub-Push
