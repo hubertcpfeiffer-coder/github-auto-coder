@@ -1,8 +1,5 @@
 # Mio-Lifepilot Developer - Python Dependencies
 
-# GUI Framework
-tkinter-pyinstaller==0.0.2
-
 # HTTP Requests für API-Calls (später)
 requests==2.31.0
 
@@ -12,3 +9,6 @@ python-dotenv==1.0.0
 # Optional: Für zukünftige Erweiterungen
 # openai==1.3.0
 # anthropic==0.7.0
+
+# Hinweis: tkinter ist normalerweise mit Python vorinstalliert
+# Falls nicht verfügbar, installiere es mit: apt-get install python3-tk
