@@ -7,13 +7,15 @@ Der Mio-Lifepilot Developer ist ein lokaler KI-Entwickler mit einem einfachen GU
 ## Projektstruktur
 
 ```
-mio-developer-local/
-├── README.md              # Hauptdokumentation
-├── mio_developer.py       # Hauptanwendung mit GUI
-├── requirements.txt       # Python-Abhängigkeiten
-├── .env.example           # Beispiel für Umgebungsvariablen
-├── .gitignore            # Git-Ignorierregeln
-└── DOCUMENTATION.md       # Diese Datei
+mio-lifepilot-developer/
+├── README.md                     # Hauptdokumentation mit Anleitung und Vision
+├── mio_developer.py              # Dein lokales Programm mit dem großen Button
+├── config.yaml.example           # Beispiel für deine API-Keys
+├── requirements.txt              # Alle benötigten Pakete
+├── dashboard/                    # Optional: Streamlit-Dashboard
+│   └── app.py
+├── .gitignore                    # Git-Ignorierregeln
+└── DOCUMENTATION.md              # Diese Datei
 ```
 
 ## Installation
@@ -42,7 +44,7 @@ pip install -r requirements.txt
 
 ## Verwendung
 
-### GUI starten
+### Option 1: Desktop GUI starten
 
 ```bash
 python mio_developer.py
@@ -53,6 +55,20 @@ Dies öffnet ein Fenster mit:
 - **Großer Button**: Klicke darauf, um Code zu generieren
 - **Ausgabefeld**: Hier erscheint der generierte Code
 
+### Option 2: Streamlit Dashboard starten (optional)
+
+```bash
+streamlit run dashboard/app.py
+```
+
+Dann öffne deinen Browser auf: http://localhost:8501
+
+Das Dashboard bietet:
+- **Web-Interface**: Zugriff von überall im lokalen Netzwerk
+- **Projekt-Historie**: Übersicht aller generierten Projekte
+- **Erweiterte Optionen**: Framework-Auswahl, Test-Generierung, etc.
+- **Runder Tisch Visualisierung**: Sehe die Diskussion der KI-Modelle
+
 ### Beispiel-Anfragen
 
 1. "Erstelle ein Modul für Provisionsverhandlungen"
@@ -62,7 +78,8 @@ Dies öffnet ein Fenster mit:
 
 ## Aktuelle Features (Demo-Version)
 
-- ✅ Einfaches GUI mit großem Button
+- ✅ Einfaches Desktop GUI mit großem Button
+- ✅ Streamlit-Dashboard für Web-Zugriff
 - ✅ Eingabe von Programmierwünschen
 - ✅ Simulation des "Runden Tisches" (Demo)
 - ✅ Code-Generierung mit Erklärung
@@ -89,8 +106,8 @@ Dies öffnet ein Fenster mit:
 - [ ] Issue-Tracking
 
 ### Phase 4: Streamlit-Dashboard
-- [ ] Web-basiertes Interface
-- [ ] Projekt-Historie
+- [x] Web-basiertes Interface
+- [x] Projekt-Historie (Basis)
 - [ ] Code-Vergleiche
 - [ ] Statistiken und Analytics
 
@@ -98,23 +115,25 @@ Dies öffnet ein Fenster mit:
 
 ### API-Keys einrichten
 
-1. Kopiere `.env.example` zu `.env`:
+1. Kopiere `config.yaml.example` zu `config.yaml`:
    ```bash
-   cp .env.example .env
+   cp config.yaml.example config.yaml
    ```
 
-2. Trage deine API-Keys ein:
-   ```bash
-   OPENAI_API_KEY=sk-...
-   ANTHROPIC_API_KEY=sk-ant-...
-   GOOGLE_API_KEY=...
-   XAI_API_KEY=...
+2. Trage deine API-Keys in `config.yaml` ein:
+   ```yaml
+   api_keys:
+     openai: "sk-..."
+     anthropic: "sk-ant-..."
+     google: "..."
+     xai: "..."
    ```
 
 3. Optional: GitHub-Konfiguration für Auto-Push:
-   ```bash
-   GITHUB_TOKEN=ghp_...
-   GITHUB_USERNAME=dein_username
+   ```yaml
+   github:
+     token: "ghp_..."
+     username: "dein_username"
    ```
 
 ## Architektur

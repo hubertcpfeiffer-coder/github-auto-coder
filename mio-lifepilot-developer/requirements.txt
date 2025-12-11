@@ -1,12 +1,15 @@
 # Mio-Lifepilot Developer - Python Dependencies
 
-# HTTP Requests für API-Calls (später)
+# HTTP Requests für API-Calls
 requests==2.31.0
 
 # Konfiguration
-python-dotenv==1.0.0
+pyyaml==6.0.1
 
-# Optional: Für zukünftige Erweiterungen
+# Streamlit Dashboard (optional)
+streamlit==1.29.0
+
+# Optional: Für zukünftige Erweiterungen mit echten API-Calls
 # openai==1.3.0
 # anthropic==0.7.0
 
