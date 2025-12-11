@@ -81,10 +81,10 @@ class CodeGenerator:
 """
         
         if plan.dependencies:
-            readme += "
+            readme += """
 ## 🔧 Installation
 
-"
+"""
             if plan.language == 'python':
                 readme += """```bash
 pip install -r requirements.txt
@@ -277,9 +277,9 @@ if __name__ == '__main__':
         
         elif plan.project_type == 'cli':
             files['src/main.py'] = """#!/usr/bin/env python3
-"""
+\"\"\"
 Main CLI Application
-"""
+\"\"\"
 import argparse
 import sys
 
@@ -331,12 +331,12 @@ if __name__ == "__main__":
         else:
             # Generic Python module
             files['src/__init__.py'] = ""
-            files['src/main.py'] = """"""
+            files['src/main.py'] = """\"\"\"
 Main module
-"""
+\"\"\"
 
 def hello_world():
-    """Main function"""
+    \"\"\"Main function\"\"\"
     print("Hello, World!")
     return "Hello, World!"
 
