@@ -1,0 +1,14 @@
+# Mio-Lifepilot Developer - Python Dependencies
+
+# GUI Framework
+tkinter-pyinstaller==0.0.2
+
+# HTTP Requests für API-Calls (später)
+requests==2.31.0
+
+# Konfiguration
+python-dotenv==1.0.0
+
+# Optional: Für zukünftige Erweiterungen
+# openai==1.3.0
+# anthropic==0.7.0
