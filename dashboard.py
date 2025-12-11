@@ -184,9 +184,9 @@ def api_stats():
 
 
 if __name__ == '__main__':
-    print("🚀 Starting Round Table Dashboard...")
-    print("📱 Open http://localhost:5000 in your browser")
-    print("🤖 Round Table System ready!")
+    print("Das Dashboard ist jetzt verfügbar! 🎉")
+    print()
+    print("Dashboard-Link: http://localhost:5000")
     
     # Erstelle templates Verzeichnis falls nicht vorhanden
     templates_dir = Path(__file__).parent / 'templates'
