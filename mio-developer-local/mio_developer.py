@@ -2,6 +2,7 @@
 """
 Mio-Lifepilot Developer - Lokaler KI-Entwickler mit einem Button
 """
+import re
 import tkinter as tk
 from tkinter import scrolledtext, messagebox
 import os
@@ -167,6 +168,11 @@ class MioDeveloperGUI:
         Simuliert den Runden Tisch der KI-Modelle
         (Demo-Version - später mit echten API-Calls)
         """
+        # Cache task words for reuse
+        task_words = task.split()
+        module_name = task_words[0] if task_words else 'Module'
+        class_name = self._to_class_name(task)
+        
         result = f"""
 {'='*70}
 🤖 RUNDER TISCH ERGEBNIS
@@ -194,9 +200,9 @@ Gemini sagt:
 📝 GENERIERTER CODE:
 {'='*70}
 
-# {task.split()[0] if task.split() else 'Module'}.py
+# {module_name}.py
 
-class {self._to_class_name(task)}:
+class {class_name}:
     \"\"\"
     {task}
     
@@ -235,7 +241,7 @@ class {self._to_class_name(task)}:
 
 # Beispiel-Verwendung:
 if __name__ == "__main__":
-    module = {self._to_class_name(task)}()
+    module = {class_name}()
     result = module.process("test data")
     print(f"Ergebnis: {{result}}")
 
@@ -257,11 +263,10 @@ if __name__ == "__main__":
     
     def _to_class_name(self, text: str) -> str:
         """Konvertiert Text zu einem validen Python Class-Namen"""
-        import re
         # Entferne Sonderzeichen und behalte nur alphanumerische Zeichen
         words = text.split()[:3]  # Nimm die ersten 3 Wörter
         # Filtere nur alphabetische Wörter und capitalisiere sie
-        clean_words = [word.capitalize() for word in words if word.isalpha() and len(word) > 0]
+        clean_words = [word.capitalize() for word in words if word.isalpha()]
         
         if not clean_words:
             return "GeneratedModule"
