@@ -9,6 +9,7 @@ Ein intelligentes Automatisierungssystem, das natürlichsprachliche Programmiera
 ## 🌟 Features
 
 - ✅ **Natürlichsprachliche Eingabe**: Beschreiben Sie einfach, was Sie programmieren möchten
+- ✅ **Round Table AI System**: Multi-AI Kollaboration (Grok, Claude, GPT, Gemini) für optimalen Code
 - ✅ **15+ Programmiersprachen**: Python, JavaScript, TypeScript, Java, Go, Rust, C++, C#, Ruby, PHP, Swift, Kotlin, Dart, Scala, R
 - ✅ **Intelligente Projekterkennung**: Automatische Erkennung von Web-Apps, APIs, CLI-Tools, Mobile Apps, Data Science Projekten
 - ✅ **Vollständige GitHub-Integration**: Erstellt automatisch Repositories, Commits und Push
@@ -59,6 +60,21 @@ echo "GITHUB_USERNAME=your_username" >> .env
 
 ```bash
 python auto_coder.py "Erstelle eine Flask REST API für ein To-Do List System"
+```
+
+#### **Mit Round Table (Multi-AI):**
+
+```bash
+python auto_coder.py "Erstelle eine Flask REST API" --round-table
+# Nutzt Grok, Claude, GPT und Gemini für optimalen Code
+```
+
+#### **Round Table CLI:**
+
+```bash
+python round_table_cli.py "Erstelle ein User Management Modul" --language python
+# Oder interaktiv:
+python round_table_cli.py --interactive
 ```
 
 #### **Web-Interface:**
@@ -149,10 +165,54 @@ Baue ein CLI Tool für File Processing
 
 ---
 
+## 🤖 Round Table - Multi-AI Kollaboration
+
+Das **Round Table** System ist eine einzigartige Funktion, die mehrere KI-Modelle zusammenbringt, um optimalen Code zu generieren:
+
+### Wie es funktioniert
+
+```
+Benutzer-Anfrage
+    ↓
+Runder Tisch Diskussion
+    ├── 🏛️ Grok → Architektur & Design
+    ├── ✨ Claude → Code-Qualität & Wartbarkeit
+    ├── 📚 GPT → Best Practices & Dokumentation
+    └── ⚡ Gemini → Performance & Skalierbarkeit
+    ↓
+Konsens-Code mit vereinter Expertise
+```
+
+### Verwendung
+
+```bash
+# Mit Auto-Coder
+python auto_coder.py "Erstelle eine API" --round-table
+
+# Standalone Round Table
+python round_table_cli.py "Entwickle ein Modul für Authentication" --language python
+
+# Interaktiv
+python round_table_cli.py --interactive
+```
+
+### Vorteile
+
+- 📈 **Höhere Code-Qualität** durch Multi-AI Review
+- 🏗️ **Solide Architektur** von Anfang an
+- 📚 **Umfassende Dokumentation** automatisch generiert
+- ⚡ **Performance-optimiert** durch Gemini's Expertise
+- 🔧 **Wartbar** dank Claude's Qualitätsfokus
+
+➡️ **Mehr Details:** Siehe [ROUND_TABLE.md](ROUND_TABLE.md)
+
+---
+
 ## 📚 Dokumentation
 
 - 📖 [**Schnellstart-Guide**](QUICKSTART.md) - Erste Schritte
 - 📘 [**Verwendungsanleitung**](USAGE.md) - Detaillierte Nutzung
+- 🤖 [**Round Table Guide**](ROUND_TABLE.md) - Multi-AI Kollaborations-System
 - 🔧 [**Installationsanleitung**](INSTALLATIONSANLEITUNG.md) - Setup-Details
 - 🤝 [**Contributing**](CONTRIBUTING.md) - Entwickler-Leitfaden
 - 🏗️ [**Projektstruktur**](PROJECT_STRUCTURE.md) - Code-Organisation

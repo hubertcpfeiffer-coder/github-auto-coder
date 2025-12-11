@@ -11,6 +11,8 @@ from colorama import init, Fore, Style
 from task_parser import TaskParser, ProjectPlan
 from code_generator import CodeGenerator
 from github_client import GitHubClient
+from round_table import RoundTable
+import asyncio
 
 # Initialisiere Colorama für farbige Ausgabe
 init(autoreset=True)
@@ -29,6 +31,7 @@ class GitHubAutoCoder:
         self.config_path = config_path
         self.parser = TaskParser()
         self.generator = CodeGenerator()
+        self.round_table = RoundTable()  # Initialisiere Runden Tisch
         
         try:
             self.github = GitHubClient(config_path)
@@ -42,7 +45,8 @@ class GitHubAutoCoder:
                       task_description: str,
                       repo_name: Optional[str] = None,
                       local_only: bool = False,
-                      private: bool = False) -> Dict:
+                      private: bool = False,
+                      use_round_table: bool = False) -> Dict:
         """
         Erstellt ein komplettes Projekt basierend auf der Aufgabenbeschreibung
         
@@ -51,6 +55,7 @@ class GitHubAutoCoder:
             repo_name: Optional: Spezifischer Repository-Name
             local_only: Nur lokal generieren, nicht auf GitHub pushen
             private: Ob das Repository privat sein soll
+            use_round_table: Nutze Runden Tisch für erweiterte Code-Generierung
             
         Returns:
             Dictionary mit Projekt-Informationen
@@ -77,6 +82,22 @@ class GitHubAutoCoder:
         # 2. Code generieren
         print(f"{Fore.YELLOW}🔨 Generiere Code-Dateien...")
         files = self.generator.generate_files(plan)
+        
+        # 2.1 Optional: Runder Tisch für verbesserte Code-Generierung
+        if use_round_table:
+            print(f"{Fore.CYAN}🤝 Starte Runden Tisch Diskussion...\n")
+            round_table_result = asyncio.run(self._use_round_table(task_description, plan))
+            
+            # Füge Runder Tisch Code hinzu
+            if round_table_result:
+                rt_filename = f"round_table_{plan.language}_module.{self._get_file_extension(plan.language)}"
+                files[rt_filename] = round_table_result.consensus_code
+                
+                # Erstelle Diskussions-Dokumentation
+                files['ROUND_TABLE_DISCUSSION.md'] = self._format_round_table_docs(round_table_result)
+                
+                print(f"{Fore.GREEN}✅ Runder Tisch Code generiert: {rt_filename}\n")
+        
         plan.files = files
         
         print(f"{Fore.GREEN}✅ {len(files)} Dateien generiert\n")
@@ -221,6 +242,10 @@ class GitHubAutoCoder:
                 local_input = input(f"{Fore.YELLOW}>>> {Style.RESET_ALL}").strip().lower()
                 local_only = local_input in ['j', 'ja', 'y', 'yes']
                 
+                print(f"\n{Fore.CYAN}Runden Tisch nutzen? (j/n, Standard: n):")
+                rt_input = input(f"{Fore.YELLOW}>>> {Style.RESET_ALL}").strip().lower()
+                use_round_table = rt_input in ['j', 'ja', 'y', 'yes']
+                
                 print()
                 
                 # Erstelle Projekt
@@ -228,7 +253,8 @@ class GitHubAutoCoder:
                     task_description=task,
                     repo_name=repo_name,
                     local_only=local_only,
-                    private=private
+                    private=private,
+                    use_round_table=use_round_table
                 )
                 
                 print(f"\n{Fore.GREEN}Bereit für die nächste Aufgabe!\n")
@@ -238,6 +264,79 @@ class GitHubAutoCoder:
                 break
             except Exception as e:
                 print(f"{Fore.RED}❌ Fehler: {e}\n")
+    
+    async def _use_round_table(self, task: str, plan: ProjectPlan):
+        """
+        Nutzt den Runden Tisch für erweiterte Code-Generierung
+        
+        Args:
+            task: Die Aufgabenbeschreibung
+            plan: Der Projektplan
+            
+        Returns:
+            RoundTableResult oder None
+        """
+        context = {
+            'language': plan.language,
+            'project_type': plan.project_type,
+            'dependencies': plan.dependencies
+        }
+        
+        try:
+            result = await self.round_table.discuss(task, context)
+            return result
+        except Exception as e:
+            print(f"{Fore.RED}❌ Runder Tisch Fehler: {e}")
+            return None
+    
+    def _get_file_extension(self, language: str) -> str:
+        """Gibt die Dateiendung für eine Sprache zurück"""
+        extensions = {
+            'python': 'py',
+            'javascript': 'js',
+            'typescript': 'ts',
+            'java': 'java',
+            'go': 'go',
+            'rust': 'rs',
+            'ruby': 'rb',
+            'php': 'php',
+            'swift': 'swift',
+            'kotlin': 'kt'
+        }
+        return extensions.get(language, 'txt')
+    
+    def _format_round_table_docs(self, result) -> str:
+        """Formatiert Runder Tisch Ergebnis als Markdown-Dokumentation"""
+        doc = f"""# Runder Tisch Diskussion
+
+## Aufgabe
+{result.task}
+
+## Zeitstempel
+{result.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
+
+## Diskussions-Zusammenfassung
+
+{result.discussion_summary}
+
+## Empfehlungen der KI-Modelle
+
+"""
+        for response in result.individual_responses:
+            doc += f"### {response.model.value.upper()} - {response.focus_area}\n\n"
+            doc += f"{response.recommendation}\n\n"
+            doc += f"**Vertrauen:** {response.confidence:.0%}\n\n"
+        
+        doc += f"""
+## Finale Empfehlung
+
+{result.final_recommendation}
+
+---
+
+*Generiert vom GitHub Auto-Coder Runden Tisch System*
+"""
+        return doc
 
 
 def main():
@@ -294,6 +393,13 @@ Beispiele:
         help='Interaktiver Modus'
     )
     
+    parser.add_argument(
+        '--round-table',
+        '-rt',
+        action='store_true',
+        help='Nutze Runden Tisch für erweiterte Code-Generierung mit KI-Modellen'
+    )
+    
     args = parser.parse_args()
     
     # Prüfe ob Config existiert
@@ -321,7 +427,8 @@ Beispiele:
             task_description=args.task,
             repo_name=args.repo_name,
             local_only=args.local_only,
-            private=args.private
+            private=args.private,
+            use_round_table=args.round_table
         )
         
         if result.get('github_success'):
