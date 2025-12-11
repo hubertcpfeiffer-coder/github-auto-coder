@@ -6,7 +6,13 @@ import re
 import tkinter as tk
 from tkinter import scrolledtext, messagebox
 import os
+import asyncio
 from typing import Dict
+
+# Importiere Round Table
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from round_table import RoundTable
 
 
 class MioDeveloperGUI:
@@ -18,6 +24,9 @@ class MioDeveloperGUI:
         self.root.title("Mio-Lifepilot Developer")
         self.root.geometry("800x600")
         self.root.configure(bg="#2b2b2b")
+        
+        # Initialisiere Round Table
+        self.round_table = RoundTable()
         
         # Titel
         title_label = tk.Label(
@@ -150,8 +159,8 @@ class MioDeveloperGUI:
         self.generate_button.config(state='disabled')
         self.root.update()
         
-        # Simuliere den "Runden Tisch" (Demo-Version)
-        result = self.simulate_round_table(task_description)
+        # Nutze den echten Round Table
+        result = self._run_round_table(task_description)
         
         # Ergebnis anzeigen
         self.output_text.config(state='normal')
@@ -162,6 +171,48 @@ class MioDeveloperGUI:
         # Status aktualisieren
         self.status_label.config(text="✅ Code erfolgreich generiert!")
         self.generate_button.config(state='normal')
+    
+    def _run_round_table(self, task: str) -> str:
+        """
+        Führt die Round Table Diskussion aus
+        
+        Args:
+            task: Die Aufgabenbeschreibung
+            
+        Returns:
+            Formatiertes Ergebnis
+        """
+        try:
+            # Erstelle Event Loop für async
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            
+            # Führe Round Table Diskussion aus
+            context = {'language': 'python', 'project_type': 'module'}
+            round_table_result = loop.run_until_complete(
+                self.round_table.discuss(task, context)
+            )
+            
+            # Formatiere Ergebnis
+            result = self.round_table.format_result(round_table_result)
+            
+            loop.close()
+            
+            return result
+            
+        except Exception as e:
+            return f"""
+{'='*70}
+❌ FEHLER
+{'='*70}
+
+Ein Fehler ist aufgetreten: {str(e)}
+
+Fallback auf Simulations-Modus...
+
+{'='*70}
+{self.simulate_round_table(task)}
+"""
     
     def simulate_round_table(self, task: str) -> str:
         """
