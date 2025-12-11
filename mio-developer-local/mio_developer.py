@@ -59,7 +59,15 @@ class MioDeveloperGUI:
             insertbackground="#ffffff"
         )
         self.input_text.pack(pady=10)
-        self.input_text.insert("1.0", "Beispiel: Erstelle ein Modul für Provisionsverhandlungen...")
+        
+        # Setze Platzhaltertext
+        self.placeholder_text = "Beispiel: Erstelle ein Modul für Provisionsverhandlungen..."
+        self.input_text.insert("1.0", self.placeholder_text)
+        self.input_text.config(fg="#888888")  # Grauer Text für Placeholder
+        
+        # Bind Events für Placeholder-Handling
+        self.input_text.bind("<FocusIn>", self._on_input_focus_in)
+        self.input_text.bind("<FocusOut>", self._on_input_focus_out)
         
         # Großer Button
         self.generate_button = tk.Button(
@@ -109,12 +117,27 @@ class MioDeveloperGUI:
         )
         self.status_label.pack(pady=5)
     
+    def _on_input_focus_in(self, event):
+        """Handler wenn Eingabefeld Fokus bekommt"""
+        current_text = self.input_text.get("1.0", tk.END).strip()
+        if current_text == self.placeholder_text:
+            self.input_text.delete("1.0", tk.END)
+            self.input_text.config(fg="#ffffff")  # Normale Textfarbe
+    
+    def _on_input_focus_out(self, event):
+        """Handler wenn Eingabefeld Fokus verliert"""
+        current_text = self.input_text.get("1.0", tk.END).strip()
+        if not current_text:
+            self.input_text.insert("1.0", self.placeholder_text)
+            self.input_text.config(fg="#888888")  # Grauer Text für Placeholder
+    
     def generate_code(self):
         """Generiert Code basierend auf der Eingabe"""
         # Eingabe holen
         task_description = self.input_text.get("1.0", tk.END).strip()
         
-        if not task_description or task_description.startswith("Beispiel:"):
+        # Prüfe ob Text leer ist oder noch Placeholder
+        if not task_description or task_description == self.placeholder_text:
             messagebox.showwarning(
                 "Keine Eingabe",
                 "Bitte gib eine Beschreibung ein, was du entwickeln möchtest!"
@@ -233,9 +256,23 @@ if __name__ == "__main__":
         return result
     
     def _to_class_name(self, text: str) -> str:
-        """Konvertiert Text zu einem Class-Namen"""
+        """Konvertiert Text zu einem validen Python Class-Namen"""
+        import re
+        # Entferne Sonderzeichen und behalte nur alphanumerische Zeichen
         words = text.split()[:3]  # Nimm die ersten 3 Wörter
-        class_name = ''.join(word.capitalize() for word in words if word.isalpha())
+        # Filtere nur alphabetische Wörter und capitalisiere sie
+        clean_words = [word.capitalize() for word in words if word.isalpha() and len(word) > 0]
+        
+        if not clean_words:
+            return "GeneratedModule"
+        
+        class_name = ''.join(clean_words)
+        
+        # Stelle sicher, dass der Name nicht mit einer Zahl beginnt
+        if class_name and class_name[0].isdigit():
+            class_name = "Module" + class_name
+        
+        # Stelle sicher, dass der Name nicht leer ist
         return class_name if class_name else "GeneratedModule"
 
 
