@@ -1,0 +1,23 @@
+# Mio-Lifepilot Developer - Python Dependencies
+
+# HTTP Requests für API-Calls
+requests==2.31.0
+
+# Konfiguration
+pyyaml==6.0.1
+
+# GitHub Integration
+PyGithub==2.1.1
+
+# Data Validation (für daily_optimizer.py)
+pydantic==2.5.0
+
+# Streamlit Dashboard (optional)
+streamlit==1.29.0
+
+# Optional: Für zukünftige Erweiterungen mit echten API-Calls
+# openai==1.3.0
+# anthropic==0.7.0
+
+# Hinweis: tkinter ist normalerweise mit Python vorinstalliert
+# Falls nicht verfügbar, installiere es mit: apt-get install python3-tk
