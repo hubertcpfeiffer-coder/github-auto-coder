@@ -22,7 +22,8 @@ class Agent:
 
     def respond(self, input_data: str) -> str:
         if self.role == "analysis":
-            return f"Analysis Agent: Identified weakness - {input_data}. Potential threats: Regulatory hurdles, competition."
+            return (f"Analysis Agent: Identified weakness - {input_data}. "
+                    f"Potential threats: Regulatory hurdles, competition.")
         elif self.role == "creative":
             return f"Creative Agent: Suggest solution - Integrate self-optimization to mitigate {input_data}."
         elif self.role == "tech":
