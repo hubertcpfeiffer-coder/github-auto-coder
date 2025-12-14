@@ -20,19 +20,19 @@ class Agent:
         self.name = name
         self.role = role
 
-    def respond(self, prompt: str) -> str:
+    def respond(self, input_data: str) -> str:
         if self.role == "analysis":
-            return f"Analysis Agent: Identified weakness - {prompt}. Potential threats: Regulatory hurdles, competition."
+            return f"Analysis Agent: Identified weakness - {input_data}. Potential threats: Regulatory hurdles, competition."
         elif self.role == "creative":
-            return f"Creative Agent: Suggest solution - Integrate self-optimization to mitigate {prompt}."
+            return f"Creative Agent: Suggest solution - Integrate self-optimization to mitigate {input_data}."
         elif self.role == "tech":
             code_snippet = (
                 "def mitigate_weakness(self):\n"
                 "    print('Mitigating {} with self-optimization extension.')\n"
-            ).format(prompt.replace("'", "\\'"))
+            ).format(input_data.replace("'", "\\'"))
             return f"Tech Agent: Generating code extension: {code_snippet}"
         elif self.role == "security":
-            return f"Security Agent: Reviewed code for {prompt} - Secure and compliant."
+            return f"Security Agent: Reviewed code for {input_data} - Secure and compliant."
         return f"{self.name}: No response."
 
 
@@ -191,3 +191,4 @@ if __name__ == "__main__":
         print(rt.format_result(res))
 
     asyncio.run(_run_demo())
+    
