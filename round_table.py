@@ -634,3 +634,18 @@ Der Konsens-Code vereint die Expertise aller {len(responses)} KI-Modelle:
 {'='*70}
 """
         return output
+
+
+# -- Start injected by Copilot: forward to roundtable_safe if available --
+try:
+    # try both relative and absolute import
+    try:
+        from .roundtable_safe import RoundTable as _RoundTableSafe  # type: ignore
+    except ImportError:
+        from roundtable_safe import RoundTable as _RoundTableSafe  # type: ignore
+    RoundTable = _RoundTableSafe
+    __all__ = ["RoundTable"]
+except Exception:
+    # If import fails, keep existing implementation in this file
+    pass
+# -- End injected block --

@@ -10,7 +10,7 @@ import os
 from colorama import init, Fore, Style
 
 # Importiere Round Table
-from round_table import RoundTable
+from roundtable_safe import RoundTable
 
 # Initialisiere Colorama
 init(autoreset=True)
@@ -75,7 +75,7 @@ async def demo_multiple_tasks():
     for i, (task, context) in enumerate(tasks, 1):
         print(f"{Fore.YELLOW}Aufgabe {i}/{len(tasks)}: {task}")
         
-        result = await rt.discuss(task, context)
+        result = await rt.discuss(task=task, context=context)
         
         # Zeige nur Zusammenfassung
         print(f"{Fore.GREEN}Empfehlungen:")
