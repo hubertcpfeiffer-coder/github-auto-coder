@@ -11,6 +11,17 @@ from enum import Enum
 import asyncio
 from datetime import datetime
 
+# -- Start injected by Copilot: forward to roundtable_safe if available --
+try:
+    # try relative import first
+    from .roundtable_safe import RoundTable as _RoundTableSafe  # type: ignore
+    RoundTable = _RoundTableSafe
+    __all__ = getattr(__all__, "__add__", lambda *a: None) and __all__ or ["RoundTable"]
+except Exception:
+    # If import fails, keep existing implementation in this file
+    pass
+# -- End injected block --
+
 
 class AIModel(Enum):
     """Verfügbare KI-Modelle"""
