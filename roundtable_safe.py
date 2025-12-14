@@ -26,9 +26,9 @@ class Agent:
         elif self.role == "creative":
             return f"Creative Agent: Suggest solution - Integrate self-optimization to mitigate {input_data}."
         elif self.role == "tech":
-            # Safe string escaping for code generation
-            escaped_input = input_data.replace("\\", "\\\\").replace("'", "\\'")
-            code_snippet = f"def mitigate_weakness(self):\n    print('Mitigating {escaped_input} with self-optimization extension.')\n"
+            # Use repr() for safe code generation - escapes all special characters properly
+            safe_message = f"Mitigating {input_data} with self-optimization extension."
+            code_snippet = f"def mitigate_weakness(self):\n    print({repr(safe_message)})\n"
             return f"Tech Agent: Generating code extension: {code_snippet}"
         elif self.role == "security":
             return f"Security Agent: Reviewed code for {input_data} - Secure and compliant."
