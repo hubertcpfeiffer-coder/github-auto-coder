@@ -26,9 +26,10 @@ class Agent:
         elif self.role == "creative":
             return f"Creative Agent: Suggest solution - Integrate self-optimization to mitigate {input_data}."
         elif self.role == "tech":
-            # Use repr() for safe code generation - escapes all special characters properly
-            safe_message = f"Mitigating {input_data} with self-optimization extension."
-            code_snippet = f"def mitigate_weakness(self):\n    print({repr(safe_message)})\n"
+            code_snippet = (
+                "def mitigate_weakness(self):\n"
+                "    print('Mitigating {} with self-optimization extension.')\n"
+            ).format(input_data.replace("'", "\\'"))
             return f"Tech Agent: Generating code extension: {code_snippet}"
         elif self.role == "security":
             return f"Security Agent: Reviewed code for {input_data} - Secure and compliant."
@@ -190,3 +191,4 @@ if __name__ == "__main__":
         print(rt.format_result(res))
 
     asyncio.run(_run_demo())
+    
